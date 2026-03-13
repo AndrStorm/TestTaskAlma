@@ -12,9 +12,9 @@ public class Map : MonoBehaviour
    
     
     [Inject]
-    private void Init(PinPrefab  pinPrefab)
+    private void Init(PinPrefab  pinPrefab, AppSettings appSettings)
     {
-        _pinFactory = new PinFactory(pinPrefab, GetComponent<RectTransform>());
+        _pinFactory = new PinFactory(pinPrefab, GetComponent<RectTransform>(), appSettings);
     }
 
     private void Awake()

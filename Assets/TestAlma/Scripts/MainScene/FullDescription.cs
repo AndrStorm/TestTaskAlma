@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 
 
+
 public class FullDescription : MonoBehaviour
 {
     public GameObject fullDescriptionWindow;
@@ -87,6 +88,7 @@ public class FullDescription : MonoBehaviour
 
     public void ChangeImage()
     {
+        
         string path = EditorUtility.OpenFilePanel("Выбор изображения",
             Application.persistentDataPath, "png,jpg,jpeg");
 

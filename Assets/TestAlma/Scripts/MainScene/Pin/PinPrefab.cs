@@ -2,7 +2,6 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Zenject;
 
 [RequireComponent(typeof(RectTransform))]
 public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -13,6 +12,7 @@ public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public TMP_Text shortTextLabel;
     //public Image image;
     
+    private Animator _animator;
     private RectTransform _rectTransform;
     private Pin _pinData;
     
@@ -25,14 +25,10 @@ public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public static event Action<Pin, PinPrefab> OnOpenFullDescriptionRequest;
     
     
-    [Inject]
-    private void Init(AppSettings  appSettings)
-    {
-        _popUpTimeDelay = appSettings.DescriptionCloseDelay;
-    }
     
     private void Awake()
     {
+        _animator =  GetComponent<Animator>();
         _rectTransform = GetComponent<RectTransform>();
     }
 
@@ -48,8 +44,8 @@ public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if (Time.realtimeSinceStartup - _lastDeactivationTime > _popUpTimeDelay)
         {
+            _animator.Play("HideDescription");
             _isDescriptionNeedToClose = false;
-            popUpDescription.SetActive(false);
         }
     }
 
@@ -65,8 +61,9 @@ public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         return _pinData;
     }
 
-    public void SetPinData(Pin pinData)
+    public void Init(Pin pinData, AppSettings settings)
     {
+        _popUpTimeDelay = settings.DescriptionCloseDelay;
         _pinData =  pinData;
         UpdatePinData();
     }
@@ -86,13 +83,13 @@ public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         OnOpenFullDescriptionRequest?.Invoke(_pinData, this);
     }
-    
 
+    
     
     public void OnPointerEnter(PointerEventData eventData)
     {
+        _animator.Play("ShowDescription");
         _isDescriptionNeedToClose = false;
-        popUpDescription.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
