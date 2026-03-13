@@ -60,6 +60,7 @@ public class Map : MonoBehaviour
         DeletePin(_selectedPin);
     }
 
+    
     public void CreateNewPin(Vector3 position)
     {
         var pin = _pinFactory.CreatePin(position);
@@ -97,6 +98,7 @@ public class Map : MonoBehaviour
         }
     }
 
+    
     private void DeletePin(PinPrefab pinPrefab)
     {
         if (!_pins.Contains(pinPrefab))

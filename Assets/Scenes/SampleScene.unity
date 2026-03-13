@@ -287,6 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1251391592}
   pinPrefab: {fileID: 884771353833443792, guid: e575a1117385925419759d3a7b19ea18, type: 3}
+  appSettings: {fileID: 11400000, guid: 2e3de01b7c37490468971da65f54d580, type: 2}
 --- !u!114 &327438355
 MonoBehaviour:
   m_ObjectHideFlags: 0

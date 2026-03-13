@@ -7,18 +7,18 @@ using Zenject;
 
 public class InputHandler
 {
-    private const float _clickDelay = 0.5f; //- config
+    private readonly float _clickDelay;
     private readonly Map _map;
     private bool _isDrugging;
     private float _lastClickTime;
 
 
     [Inject]
-    private InputHandler(Map map)
+    private InputHandler(Map map, AppSettings appSettings)
     {
         _map = map;
+        _clickDelay = appSettings.ClickPressingDelay;
     }
-
     
     public void OnClick(Vector2 position, bool isDown)
     {

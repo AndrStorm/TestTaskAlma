@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 [RequireComponent(typeof(RectTransform))]
 public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -11,12 +12,11 @@ public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public TMP_Text nameLabel;
     public TMP_Text shortTextLabel;
     //public Image image;
-
-    public float popUpTimeDelay = 1f;
     
     private RectTransform _rectTransform;
     private Pin _pinData;
     
+    private float _popUpTimeDelay;
     private float _lastDeactivationTime;
     private bool _isDescriptionNeedToClose;
     
@@ -24,6 +24,12 @@ public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public static event Action<PinPrefab> OnDeleteRequest;
     public static event Action<Pin, PinPrefab> OnOpenFullDescriptionRequest;
     
+    
+    [Inject]
+    private void Init(AppSettings  appSettings)
+    {
+        _popUpTimeDelay = appSettings.DescriptionCloseDelay;
+    }
     
     private void Awake()
     {
@@ -40,7 +46,7 @@ public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     
     private void CloseDescription()
     {
-        if (Time.realtimeSinceStartup - _lastDeactivationTime > popUpTimeDelay)
+        if (Time.realtimeSinceStartup - _lastDeactivationTime > _popUpTimeDelay)
         {
             _isDescriptionNeedToClose = false;
             popUpDescription.SetActive(false);
