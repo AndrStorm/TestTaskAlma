@@ -1,10 +1,10 @@
 using System;
 using System.IO;
+using SFB;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 
 
@@ -88,9 +88,10 @@ public class FullDescription : MonoBehaviour
 
     public void ChangeImage()
     {
-        
-        string path = EditorUtility.OpenFilePanel("Выбор изображения",
-            Application.persistentDataPath, "png,jpg,jpeg");
+        var paths = StandaloneFileBrowser.OpenFilePanel("OВыбор изображения",
+            Application.persistentDataPath, "png;*.jpg;*.jpeg", false);
+        if (paths.Length == 0) return;
+        var path = paths[0];
 
         if (path.Length == 0) return;
         
