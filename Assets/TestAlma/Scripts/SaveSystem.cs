@@ -10,8 +10,7 @@ public static class SaveSystem
 
     private static string path => Path.Combine(Application.persistentDataPath, SAVE_PATH);
     
-
-    //- async
+    
     public static void SaveData<T>(T data)
     {
         string json = JsonUtility.ToJson(data);
@@ -19,10 +18,6 @@ public static class SaveSystem
         using StreamWriter writer = new StreamWriter(path);
         
         writer.Write(json);
-        /*var t = writer.WriteAsync(json);*/
-        /*t.Wait();
-        t.ContinueWith(x => Debug.Log("Saved"));
-        t.Start();*/
     }
     
     public static async Task SaveDataAsync<T>(T data)
@@ -31,7 +26,6 @@ public static class SaveSystem
         
         await using StreamWriter writer = new StreamWriter(path);
         await writer.WriteAsync(json);
-        Debug.Log("Saved");
     }
 
     public static T LoadData<T>() where T : new()
@@ -45,13 +39,12 @@ public static class SaveSystem
         return data;
     }
     
-    public static async Task<T> LoadDataAsync<T>() where T : new()
+    public static T LoadDataAsync<T>() where T : new()
     {
         if (!IsFileExist()) return new T();
         
         using StreamReader reader = new StreamReader(path);
         var t = reader.ReadToEndAsync();
-        await t;
         
         string json = t.Result;
         var data = JsonUtility.FromJson<T>(json);

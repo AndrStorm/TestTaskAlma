@@ -75,20 +75,21 @@ public class Map : MonoBehaviour
         {
             data.pins.Add(pin.GetPinData());
         }
-        SaveSystem.SaveData(data);
+        _ = SaveSystem.SaveDataAsync(data);
     }
 
     public void LoadPins()
     {
         ClearMap();
         
-        var data = SaveSystem.LoadData<MapData>();
+        var data = SaveSystem.LoadDataAsync<MapData>();
         foreach (var pin in data.pins)
         {
             var pinPrefab = _pinFactory.CreatePin(pin);
             _pins.Add(pinPrefab);
         }
     }
+    
 
     public void ClearMap()
     {
