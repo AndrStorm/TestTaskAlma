@@ -50,9 +50,6 @@ public class InputHandler
         {
             _isDrugging = false;
         }
-        
-        //- screen size pos
-        //Debug.Log("CanvasToWorld " + CanvasToWorld(_map.RectTransform));
     }
     
     

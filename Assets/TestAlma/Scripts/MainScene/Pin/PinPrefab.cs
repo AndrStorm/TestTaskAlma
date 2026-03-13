@@ -6,11 +6,8 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(RectTransform))]
 public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-
-    public GameObject popUpDescription;
     public TMP_Text nameLabel;
     public TMP_Text shortTextLabel;
-    //public Image image;
     
     private Animator _animator;
     private RectTransform _rectTransform;
@@ -53,7 +50,7 @@ public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void MovePin(Vector2 position)
     {
         _rectTransform.position = position;
-        _pinData.position = position;
+        _pinData.position = _rectTransform.anchoredPosition;
     }
 
     public Pin GetPinData()
@@ -64,8 +61,14 @@ public class PinPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void Init(Pin pinData, AppSettings settings)
     {
         _popUpTimeDelay = settings.DescriptionCloseDelay;
-        _pinData =  pinData;
+        _pinData = pinData;
+        _pinData.position = _rectTransform.anchoredPosition;
         UpdatePinData();
+    }
+
+    public void SetUpAnchoredPosition(Pin pinData)
+    {
+        _rectTransform.anchoredPosition = pinData.position;
     }
     
     public void UpdatePinData()

@@ -17,17 +17,16 @@ public class PinFactory
     
     public PinPrefab CreatePin(Vector3 position)
     {
-        Pin pinData = new Pin
-        {
-            position = position
-        };
-        var pin = CreatePin(pinData);
+        Pin pinData = new Pin();
+        var pin = Object.Instantiate(_pinPrefab, position, Quaternion.identity, _mapTransform);
+        pin.Init(pinData, _appSettings);
         return pin;
     }
     
     public PinPrefab CreatePin(Pin pinData)
     {
-        var pin = Object.Instantiate(_pinPrefab, pinData.position, Quaternion.identity, _mapTransform);
+        var pin = Object.Instantiate(_pinPrefab, Vector3.zero, Quaternion.identity, _mapTransform);
+        pin.SetUpAnchoredPosition(pinData);
         pin.Init(pinData, _appSettings);
         return pin;
     }
